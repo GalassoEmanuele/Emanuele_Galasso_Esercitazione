@@ -16,6 +16,7 @@ import org.apache.wink.json4j.JSONObject;
 
 import com.notsecurebank.util.DBUtil;
 import com.notsecurebank.util.ServletUtil;
+import javax.annotation.security.RolesAllowed;
 
 @Path("/admin")
 public class AdminAPI extends NotSecureBankAPI {
@@ -72,19 +73,13 @@ public class AdminAPI extends NotSecureBankAPI {
 
     @POST
     @Path("/addUser")
+    @RolesAllowed("admin")
     @Produces("application/json")
     public Response addUser(String bodyJSON, @Context HttpServletRequest request) throws IOException {
         LOG.info("addUser");
 
         JSONObject bodyJson = new JSONObject();
-
-        // Checking if user is logged in
-
-        if (!ServletUtil.isLoggedin(request)) {
-            String response = "{\"loggedIn\" : \"false\"}";
-            return Response.status(400).entity(response).build();
-        }
-
+        
         String firstname;
         String lastname;
         String username;
