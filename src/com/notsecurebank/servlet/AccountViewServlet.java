@@ -47,12 +47,29 @@ public class AccountViewServlet extends HttpServlet {
 
         // show transactions within the specified date range (if any)
         if (request.getRequestURL().toString().endsWith("showTransactions")) {
-            String startTime = request.getParameter("startDate");
-            String endTime = request.getParameter("endDate");
+            String startTime = sanitize(request.getParameter("startDate"));
+            String endTime = sanitize(request.getParameter("endDate"));
 
             LOG.info("Transactions within '" + startTime + "' and '" + endTime + "'.");
             RequestDispatcher dispatcher = request.getRequestDispatcher("/bank/transaction.jsp?" + ((startTime != null) ? "&startTime=" + startTime : "") + ((endTime != null) ? "&endTime=" + endTime : ""));
             dispatcher.forward(request, response);
+
+             if (isValidDateTime(startTime) && isValidDateTime(endTime)) {
+                LOG.info("Transactions within '" + sanitize(startTime) + "' and '" + sanitize(endTime) + "'.");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/bank/transaction.jsp?" + ((startTime != null) ? "&startTime=" + sanitize(startTime) : "") + ((endTime != null) ? "&endTime=" + sanitize(endTime) : ""));
+                dispatcher.forward(request, response);
+            } else {
+                LOG.warn("Invalid date/time format.");
+                // Handle the error or redirect to an appropriate error page
+            }
         }
+    }
+
+      private String sanitize(String date) {
+        if (date === null || data === undefined) {
+            return null;
+        }
+        // Remove any characters that are not alphanumeric or whitespace
+        return date.replaceAll("[^\\w\\s]", "");
     }
 }
