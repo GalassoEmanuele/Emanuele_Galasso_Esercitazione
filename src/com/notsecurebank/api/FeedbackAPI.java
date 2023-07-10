@@ -46,6 +46,7 @@ public class FeedbackAPI extends NotSecureBankAPI {
         String comments;
 
         try {
+            // Update for V7
             name = StringEscapeUtils.escapeHtml((String) myJson.get("name"));
             email = StringEscapeUtils.escapeHtml((String) myJson.get("email"));
             subject = StringEscapeUtils.escapeHtml((String) myJson.get("subject"));
