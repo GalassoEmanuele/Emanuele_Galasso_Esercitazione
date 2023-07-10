@@ -20,6 +20,8 @@ public class OperationsUtil {
     public static String doTransfer(HttpServletRequest request, long creditActId, String accountIdString, double amount) {
         LOG.debug("doTransfer(HttpServletRequest, " + creditActId + ", '" + accountIdString + "', " + amount + ")");
 
+        if (!ServletUtil.verifyToken(request)) return "ERROR";
+
         long debitActId = 0;
 
         User user = ServletUtil.getUser(request);

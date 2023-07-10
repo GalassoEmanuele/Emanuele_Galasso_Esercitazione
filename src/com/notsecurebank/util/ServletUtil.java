@@ -277,4 +277,18 @@ public class ServletUtil {
         request.getSession().setAttribute("specialPrizeCode", specialPrizeCode);
         return specialPrizeCode;
     }
+
+    public static String generateToken(HttpServletRequest request) {
+        HttpSession session = request.getSession(true);
+        String token = UUID.randomUUID().toString();
+        session.setAttribute("Token_", token);
+        return token;
+    }
+
+    public static boolean verifyToken(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        String requestToken = request.getParameter("Token_");
+        String sessionToken = (String) session.getAttribute("Token_");
+        return requestToken != null && requestToken != undefined && requestToken.equals(sessionToken);
+    }
 }

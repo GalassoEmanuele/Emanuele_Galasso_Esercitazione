@@ -37,6 +37,8 @@
 		
 		<form id="tForm" name="tForm" method="post" action="doTransfer" onsubmit="return (confirminput(tForm));">
 		
+		<input type="hidden" name="Token_" value="<%=ServletUtil.generateToken(request)%>">
+
 		<h1>Transfer Funds</h1>
 		
 		<table cellSpacing="0" cellPadding="1" width="100%" border="0">
